@@ -37,7 +37,7 @@ public class MPDay {
 		oneTPO = _TPOs.get(timestamp);
 		if (oneTPO == null)	oneTPO = new HashMap<String, ArrayList<String>>(100);
 
-		while(price>0) {
+		while(price>=low) {
 			
 			String price1= Double.toString(price);
 			ArrayList<String> list = oneTPO.get(price1);

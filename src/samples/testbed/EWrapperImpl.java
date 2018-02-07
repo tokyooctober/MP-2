@@ -235,7 +235,7 @@ public class EWrapperImpl implements EWrapper {
 		if (date.startsWith("finished-")) 
 			return;
 		
-		//MarketProfile_add(date, open, high, low, close);
+		MarketProfile_add(date, open, high, low, close);
 
 		
 		
