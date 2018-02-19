@@ -204,7 +204,7 @@ public class Testbed {
 		
 		client.reqHistoricalData(4003, ContractSamples.MHI(), "" , "3 D", "30 mins", "TRADES", 0, 1, null);
 		System.out.println("Historical data requested.");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		/*** Canceling historical data requests ***/
 		client.cancelHistoricalData(4003);
 		//client.cancelHistoricalData(4001);

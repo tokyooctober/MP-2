@@ -1,6 +1,5 @@
 package samples.testbed;
 
-import java.util.HashMap;
 import java.util.Set;
 
 import com.ib.client.CommissionReport;
@@ -16,6 +15,8 @@ import com.ib.client.Order;
 import com.ib.client.OrderState;
 import com.ib.client.SoftDollarTier;
 import com.ib.client.TickType;
+
+import samples.testbed.contracts.ContractSamples;
 
 //! [ewrapperimpl]
 public class EWrapperImpl implements EWrapper {
@@ -233,37 +234,17 @@ public class EWrapperImpl implements EWrapper {
 		System.out.println("HistoricalData. "+reqId+" - Date: "+date+", Open: "+open+", High: "+high+", Low: "+low+", Close: "+close+", Volume: "+volume+", Count: "+count+", WAP: "+WAP+", HasGaps: "+hasGaps);
 
 		if (date.startsWith("finished-")) 
-			return;
+		{
+			System.out.println("finished-");
+			MPDay.printall();
+				return;
+		}
 		
-		MarketProfile_add(date, open, high, low, close);
-
-		
-		
+		MPDay.MarketProfile_add(ContractSamples.MHIString(), date, open, high, low, close);
 	}
 	//! [historicaldata]
 	
-	private static HashMap<String, MPDay> _globalmp;
-	
-	
-	private static synchronized MPDay mp_getDayMP(String contract, String date)
-	{
-		if (_globalmp == null)
-			_globalmp = new HashMap<String, MPDay>();
-		
-		MPDay mpDay = _globalmp.get(contract);
-		if (mpDay == null)
-				mpDay = new MPDay(contract);
-		
-		return mpDay;
-	}
-	
-	private void MarketProfile_add(String date, double open, double high, double low, double close) 
-	{
-		String[] working = date.split(" ");
-		MPDay mpDay = mp_getDayMP("MHIF8", working[0]);
-		mpDay.add(working[1], open, high, low, close);
-				
-	}
+
 	//! [scannerparameters]
 	@Override
 	public void scannerParameters(String xml) {

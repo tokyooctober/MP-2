@@ -66,7 +66,7 @@ public class ContractSamples {
 	public static Contract MHI() {
 		//! [HSI]
 		Contract contract = new Contract();
-		contract.localSymbol("MHIF8");
+		contract.localSymbol(MHIString());
 		contract.secType("FUT");
 		contract.exchange("HKFE");
 		contract.currency("HKD");
@@ -74,6 +74,9 @@ public class ContractSamples {
 		return contract;
 	}
 	
+	public static String MHIString() {
+		return "MHIG8";
+	}
 	
 	public static Contract EurGbpFx() {
 		//! [cashcontract]
