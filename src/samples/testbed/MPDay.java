@@ -43,6 +43,8 @@ public class MPDay {
 	public void add(String timestamp, double open, double high, double low, double close) 
 	{
 		double price = high;
+		ArrayList<String> row ;
+		
 		if (!ok) { 
 			_dayHigh=high;
 			_dayLow = low;
@@ -53,34 +55,37 @@ public class MPDay {
 		if (high > _dayHigh) _dayHigh = high;
 		if (low < _dayLow)	_dayLow=low;
 		
-		while(price>low)
+		while(price>=low)
 		{	
+			
 			String price1= Double.toString(price);
-			ArrayList<String> row = _priceRows.getOrDefault(price1, new ArrayList<String>(10));
-						
+			row = _priceRows.getOrDefault(price1, new ArrayList<String>(10));
 			row.add(letter);			
 			_priceRows.put(price1, row);
+			//System.out.println(_date+" "+timestamp+":"+price+" ("+row.size()+")");
 			price -= _tick;
 		}
-		 ;
+		//print();
+		//System.out.println("----------------");
 	}
 	
 	public void print()
 	{
-			//System.out.println("Data high:"+_dayHigh);
-			//System.out.println("Data low:"+_dayLow);
+			System.out.println("Data high:"+_dayHigh);
+			System.out.println("Data low:"+_dayLow);
 			double price1 = _dayHigh;
 			while (price1 > _dayLow)
 			{
 				String px = Double.toString(price1);
 				ArrayList<String> row = _priceRows.get(px);
-				System.out.print(" "+px+" ");
-				//if (row!=null)
+				//System.out.print(" "+px+" ("+row.size()+") ");
+				System.out.print(" "+px+":");
 				for (String x : row )
 				{
 					System.out.print(x);
 				}
 				price1 -= _tick;
+				System.out.println();
 			}
 	}
 
@@ -95,11 +100,19 @@ public class MPDay {
 		if (MPDay._globalmp == null)
 			MPDay._globalmp = new HashMap<String, HashMap<String, MPDay>>(5);
 		
-		HashMap<String, MPDay> mpDays = MPDay._globalmp.getOrDefault(contract, new HashMap<String, MPDay>(31) );;
-		_globalmp.put(contract, mpDays);
+		HashMap<String, MPDay> mpDays = MPDay._globalmp.get(contract);;
+		if (mpDays == null)
+		{
+			mpDays = new HashMap<String, MPDay>(31) ;
+			_globalmp.put(contract, mpDays);
+		}
+		MPDay mpDay = mpDays.get(date);
+		if (mpDay == null)
+		{
+			mpDay = new MPDay(contract, date);
+			mpDays.put(date,  mpDay);	
+		}
 		
-		MPDay mpDay = mpDays.getOrDefault(date, new MPDay(contract, date));
-		mpDays.put(date,  mpDay);
 		
 		return mpDay;
 	}

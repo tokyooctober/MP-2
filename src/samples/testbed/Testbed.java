@@ -202,7 +202,7 @@ public class Testbed {
 		//client.reqHistoricalData(4001, ContractSamples.EurGbpFx(), endDateTime1, "1 M", "1 day", "MIDPOINT", 1, 1, null);
 		//client.reqHistoricalData(4002, ContractSamples.EuropeanStock(), endDateTime1, "10 D", "1 min", "TRADES", 1, 1, null);
 		
-		client.reqHistoricalData(4003, ContractSamples.MHI(), "" , "3 D", "30 mins", "TRADES", 0, 1, null);
+		client.reqHistoricalData(4003, ContractSamples.MHI(), "" , "2 D", "30 mins", "TRADES", 0, 1, null);
 		System.out.println("Historical data requested.");
 		Thread.sleep(1000);
 		/*** Canceling historical data requests ***/
