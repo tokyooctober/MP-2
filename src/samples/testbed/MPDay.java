@@ -25,10 +25,28 @@ public class MPDay {
 	private String _date;
 	private boolean ok=false;
 	
-	@SuppressWarnings("unused")
+	private String[] bracketCode = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", 
+							  "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x"
+							};
+	
+	private String[][] TPO = new String[24][60];
+	
 	private MPDay()
 	{	
-		
+		int x=0;
+		for(int h=0;h<24;h++)
+		{
+			for (int m=0;m<=29;m++)
+			{
+				TPO[h][m] = bracketCode[x];
+			}
+			x++;
+			for (int m=30;m<=59;m++)
+			{
+				TPO[h][m] = bracketCode[x];
+			}
+			x++;
+		}
 	}
 
 	public MPDay(String contract, String date)
@@ -91,8 +109,13 @@ public class MPDay {
 
 	private String determineLetter(String timestamp) 
 	{
-		_letterMap.put(timestamp, "A");
-		return "A";
+		String[] working = timestamp.split(":");
+		int h = Integer.parseInt(working[0]);
+		int m = Integer.parseInt(working[1]);
+		String tpo = TPO[h][m];
+		
+		_letterMap.put(timestamp, tpo);
+		return tpo;
 	}
 
 	private static synchronized MPDay getDayMP(String contract, String date)
