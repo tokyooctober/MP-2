@@ -75,7 +75,7 @@ public class Testbed {
 	}
 
 	private static void histogram(EClientSocket client) {
-	    client.reqHistogramData(4002, ContractSamples.MHI(), false, "3 days");
+	    client.reqHistogramData(4002, ContractSamples.MHI(), false, "1 days");
 	    
 	    try {
 	        Thread.sleep(60000);

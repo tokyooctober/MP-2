@@ -2,12 +2,7 @@ package samples.testbed;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-
-import javax.print.DocFlavor.STRING;
-
-import samples.testbed.contracts.ContractSamples;
 
 public class MPDay {
 	
@@ -15,7 +10,7 @@ public class MPDay {
 	// 1 is trade price, 2 is the TPO list matching the trade price.
 	private HashMap<String,  ArrayList<String>> _priceRows;
 	
-	private HashMap<String, String> _letterMap;
+	private HashMap<String, String> _letterUsed;
 	private double _dayHigh;
 	private double _dayLow;
 //	private String _dayOpen;
@@ -23,7 +18,12 @@ public class MPDay {
 	private static HashMap<String, HashMap<String, MPDay>> _globalmp;
 	private double _tick = 1.0;
 	private String _date;
-	private boolean ok=false;
+	private String _RTHstart;
+	private String _RTHends;
+	private String _outsideRTHstart;
+	private String _outsideRTHends;
+	
+	private boolean _init=false;
 	
 	private String[] bracketCode = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", 
 							  "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x"
@@ -55,18 +55,27 @@ public class MPDay {
 		_contract = contract;
 		_date = date;
 		_priceRows = new HashMap<String, ArrayList<String>>(100);
-		_letterMap = new HashMap<String, String>(100);
+		_letterUsed = new HashMap<String, String>(100);
 	}
 
+	public MPDay(String contract, String date, String RTHstarts, String RTHends, String outsideRTHstarts, String outsideRTHends)
+	{
+		this(contract, date);
+		_RTHstart = RTHstarts;
+		_RTHends = RTHends;
+		_outsideRTHstart = outsideRTHstarts;
+		_outsideRTHends = outsideRTHends;
+		
+	}
 	public void add(String timestamp, double open, double high, double low, double close) 
 	{
 		double price = high;
 		ArrayList<String> row ;
 		
-		if (!ok) { 
+		if (!_init) { 
 			_dayHigh=high;
 			_dayLow = low;
-			ok=true;
+			_init=true;
 		}
 		
 		String letter = determineLetter(timestamp);
@@ -114,7 +123,7 @@ public class MPDay {
 		int m = Integer.parseInt(working[1]);
 		String tpo = TPO[h][m];
 		
-		_letterMap.put(timestamp, tpo);
+		_letterUsed.put(timestamp, tpo);
 		return tpo;
 	}
 

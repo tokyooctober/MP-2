@@ -89,7 +89,7 @@ public class ContractSamples {
 	}
 	
 	public static String MHIString() {
-		return "MHIG8";
+		return "MHIH8";
 	}
 	
 	
