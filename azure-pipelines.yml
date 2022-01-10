@@ -1,4 +1,16 @@
 # Starter pipeline
+- task: FortifyOnDemandStatic@8
+  inputs:
+    FortifyProjects: '/src/dir1'
+    ReleaseOptions: '0'
+    ReleaseId: 1
+    EntitlementSelection: '1'
+    EntitlementPreference: '1'
+    OverrideScanSettings: '2'
+    InProgressScanActionType: '0'
+    RemediationScanPreference: '2'
+    BuildType: 'none'
+    PolicyFailAction: '0'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
